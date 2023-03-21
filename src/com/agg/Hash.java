@@ -8,17 +8,34 @@ public class Hash<T> {
     public Hash() {
 
     }
+
     public Hash(int capacidad) {
-        //TODO
+        this.contenedor = new Celda[capacidad];
     }
+
     public Hash(int capacidad, float alfaMax) {
         //TODO
+        this.contenedor = new Celda[capacidad];
+        this.alfaMaximo = alfaMax;
     }
+
     public void insertar(int clave, T v) {
         //TODO
+        boolean insertado = false;
+        int colisiones = 0;
+        while (!insertado) {
+
+            int posicion = funcionHash(clave, colisiones);
+            if (contenedor[posicion].getEstado() == 1) {
+                //TODO la cenlda esta vacia, insertar
+                contenedor[posicion] = new Celda<>(clave);
+            }
+            //TODO insertar
+        }
     }
-    public void insertar(int clave) {
-        //TODO
+    public boolean borrar(int clave) {
+        //TODO retornar true o false si se ha podido borrar o no
+        return false;
     }
     public T get(int clave) {
         //TODO
@@ -42,8 +59,7 @@ public class Hash<T> {
     }
 
     public float factorCarga() {
-        //TODO
-        return 0;
+        return numElementos/contenedor.length;
     }
 
     private boolean hayColision(int clave) {
@@ -52,7 +68,6 @@ public class Hash<T> {
     }
 
     private int funcionHash(int clave, int colisiones) {
-        //TODO
         return hash1(clave) + hash2(clave, colisiones);
     }
 
