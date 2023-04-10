@@ -8,15 +8,24 @@ public class Celda<T> {
     private int estado;
 
     public Celda() {
-
+        //Celda creada por defecto esta vacia
+        Celda.this.estado = 0;
     }
 
-    public Celda(int clave) {
+    public Celda(int clave, T valor) {
         Celda.this.clave = clave;
+        Celda.this.valor = valor;
+        //Establecemos estado como "ocupado"
+        Celda.this.estado = 1;
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
+    public boolean setEstado(int estado) {
+        if (estado == 1 || estado == -1 || estado == 0) {
+            this.estado = estado;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getEstado() {
@@ -39,11 +48,7 @@ public class Celda<T> {
         return valor;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Celda<?> celda = (Celda<?>) o;
+    public boolean equals(Celda<T> celda) {
         return clave == celda.clave && estado == celda.estado && Objects.equals(valor, celda.valor);
     }
 }
