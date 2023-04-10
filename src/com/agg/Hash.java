@@ -10,7 +10,12 @@ public class Hash<T> {
     //TODO IMPORTANTE numElementos es el tamaño de la tabla (N)
     // o los elementos que hay insertados?
     public Hash() {
-
+        //Por defecto N=7 y alfa=80%
+        Celda<T> celdaVacia = new Celda<>();
+        Celda<T>[] contAux = new Celda[7];
+        Arrays.fill(contAux, celdaVacia);
+        this.contenedor = contAux;
+        this.numElementos = 7;
     }
 
     public Hash(int capacidad) {
@@ -34,7 +39,8 @@ public class Hash<T> {
     }
 
     public void insertar(int clave, T v) {
-        //TODO Comprobar porcentaje carga de la tabla
+        //TODO Comprobar si se supera porcentaje carga
+        // al insertar una nueva celda
         if (factorCarga() > alfaMaximo) {
             //El factor de carga es mayor que alfa, no se inserta elemento
             // y se amplia tabla
@@ -110,7 +116,7 @@ public class Hash<T> {
         //TODO es comprobar si tabla hash esta vacia?
         boolean esVacia = true;
         for (Celda<T> c: contenedor) {
-            if (c.getEstado() != 1) {
+            if (c.getEstado() == 1) {
                 esVacia = false;
             }
         }
