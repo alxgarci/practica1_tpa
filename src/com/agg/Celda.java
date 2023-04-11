@@ -7,9 +7,12 @@ public class Celda<T> {
     private T valor;
     private int estado;
 
+    //La celda
     public Celda() {
         //Celda creada por defecto esta vacia
         Celda.this.estado = 0;
+        Celda.this.valor = null;
+        Celda.this.clave = -1;
     }
 
     public Celda(int clave, T valor) {

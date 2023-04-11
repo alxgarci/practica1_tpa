@@ -5,7 +5,7 @@ public class Pruebas {
     public static void main(String[] args) {
 	// write your code here
         Hash<String> tablaHash = new Hash<String>(11);
-        tablaHash.setAlfa(0.6f);
+        tablaHash.setAlfa(0.3f);
         tablaHash.insertar(12, "RAFA");
         tablaHash.insertar(11, "JOEL");
         tablaHash.insertar(3, "LOLA");
