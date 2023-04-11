@@ -57,32 +57,28 @@ public class Hash<T> {
     public void insertar(int clave, T v) {
         this.numElementos = numElementos+1;
         if (factorCarga() > alfaMaximo) {
-            System.out.println("Se supera factor de carga en tabla");
             //El factor de carga es mayor que alfa, no se inserta elemento
             // y se amplia tabla
             this.redimensionar();
             this.insertar(clave, v);
         } else {
             this.numElementos = numElementos-1;
-            boolean insertado = false;
+            boolean cont = true;
             int colisiones = 0;
-            if (this.get(clave) == null) {
+            if (get(clave) == null) {
 
                 //Comprobamos si la clave ya esta en la tabla y no lo insertamos entonces
-                while (!insertado) {
+                while (cont) {
                     int posicion = funcionHash(clave, colisiones);
-                    if (this.hayColision(posicion)) {
+                    if (hayColision(posicion)) {
                         //La cenlda esta ocupada, colision
                         colisiones++;
                     } else {
                         //La celda esta vacia o borrada, insertamos
-//                        Celda<T> celda = new Celda<T>(clave, v);
-//                        contenedor[posicion] = celda;
-                        contenedor[posicion].setEstado(1);
-                        contenedor[posicion].setClave(clave);
-                        contenedor[posicion].setValor(v);
+                        Celda<T> celda = new Celda<T>(clave, v);
+                        contenedor[posicion] = celda;
 
-                        insertado = true;
+                        cont = false;
                     }
                 }
                 this.numElementos = numElementos+1;
@@ -138,6 +134,11 @@ public class Hash<T> {
                     valor = contenedor[posicion].getValor();
                     cont = false;
                 } else {
+                    if (contenedor[posicion].getEstado() == 0) {
+                       cont = false;
+                    } else {
+                        colisiones++;
+                    }
                     colisiones++;
                 }
             } else if (contenedor[posicion].getEstado() == -1) {
@@ -172,7 +173,7 @@ public class Hash<T> {
     // el valor introducido es mayor que el actual y si se encuentra
     // entre 1.0 y 0.0
     public void setAlfa(float alfaMax) {
-        if (alfaMax > 1.0 || alfaMax < 0.0 || alfaMax < alfaMaximo) {
+        if (alfaMax > 1.0f || alfaMax < 0.0f || alfaMax < alfaMaximo) {
             System.out.println("Alfa max no puede ser < alfaMaximo, y tiene que estar entre 0.0 y 1.0");
         } else {
             this.alfaMaximo = alfaMax;
@@ -227,8 +228,7 @@ public class Hash<T> {
     private void redimensionar() {
         int nt = contenedor.length*2;
         int nuevoTamanio = siguientePrimo(nt);
-        Hash<T> hashAux = new Hash<>(nuevoTamanio);
-        hashAux.setAlfa(alfaMaximo);
+        Hash<T> hashAux = new Hash<>(nuevoTamanio, alfaMaximo);
         for (Celda<T> celdaAnteriorTabla : contenedor) {
             if (celdaAnteriorTabla.getEstado() == 1) {
                 hashAux.insertar(celdaAnteriorTabla.getClave(), celdaAnteriorTabla.getValor());
@@ -270,7 +270,7 @@ public class Hash<T> {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        res.append(String.format("TABLA HASH RESULTANTE (N = %d) (TAM = %d) (\u03B1 = %.3f)\n", contenedor.length, numElementos, factorCarga()));
+        res.append(String.format("TABLA HASH RESULTANTE (N = %d) (TAM = %d) (\u03B1 = %f) (\u03B1max = %f)\n", contenedor.length, numElementos, factorCarga(), alfaMaximo));
         res.append("|| INDEX || ESTADO | CLAVE |   VALOR   ||\n");
         int pos = 0;
         for (Celda<T> c: contenedor) {
@@ -282,7 +282,7 @@ public class Hash<T> {
                     String.format("%1$"+6+"d", pos),
                     String.format("%1$"+7+"d", c.getEstado()),
                     String.format("%1$"+6+"d", c.getClave()),
-                    String.format("%1$"+10+"s", (c.getValor() == null)?" ":String.valueOf(c.getValor())
+                    String.format("%1$"+10+"s", String.valueOf(c.getValor())
                     )));
             pos++;
         }
