@@ -1,5 +1,3 @@
-package com.agg;
-
 import java.util.Objects;
 
 public class Celda<T> {

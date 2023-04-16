@@ -1,5 +1,3 @@
-package com.agg;
-
 import java.util.Arrays;
 
 public class Hash<T> {
