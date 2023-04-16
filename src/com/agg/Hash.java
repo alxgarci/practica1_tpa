@@ -165,14 +165,14 @@ public class Hash<T> {
         return esVacia;
     }
 
-    public float getAlfa() {
+    public float getAlfaMax() {
         return alfaMaximo;
     }
 
     //Establecemos el alfaMaximo, solo se establece alfaMax si
     // el valor introducido es mayor que el actual y si se encuentra
     // entre 1.0 y 0.0
-    public void setAlfa(float alfaMax) {
+    public void setAlfaMax(float alfaMax) {
         if (alfaMax > 1.0f || alfaMax < 0.0f || alfaMax < alfaMaximo) {
             System.out.println("Alfa max no puede ser < alfaMaximo, y tiene que estar entre 0.0 y 1.0");
         } else {
